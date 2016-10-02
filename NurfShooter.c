@@ -1,14 +1,12 @@
 #include <SoftwareSerial.h>// import the serial library
 
-
-
 SoftwareSerial Genotronex(0, 1); // RX, TX
-int ledpin=9; // led on D13 will show blink on / off
+int ledpin=9; // led on D13 will show blink on / off if bluetooth connected.
 int BluetoothData; // the data given from Computer
 
 const int switchPin = 10;    // switch input
-const int motor1Pin = 13;    // H-bridge leg 1 (pin 2, 1A)
-const int motor2Pin = 12;    // H-bridge leg 2 (pin 7, 2A)
+const int motor1Pin = 13;    // H-bridge leg 1 
+const int motor2Pin = 12;    // H-bridge leg 2 
 const int enablePin = 11;    // H-bridge enable pin
 
 void setup() {
@@ -26,6 +24,7 @@ void setup() {
   pinMode(enablePin, OUTPUT);
   pinMode(ledpin, OUTPUT);
  
+  
   // set enablePin high so that motor can turn on:
   digitalWrite(enablePin, HIGH);
 }
@@ -42,19 +41,30 @@ void loop() {
       digitalWrite(motor2Pin, LOW);   // set leg 2 of the H-bridge low
     }
 // put your main code here, to run repeatedly:
+
    if (Genotronex.available()){
 BluetoothData=Genotronex.read();
+
    if(BluetoothData=='1'){   // if number 1 pressed ....
    digitalWrite(9,HIGH);
-   Genotronex.println("LED  On D13 ON ! ");
+   
    }
   if (BluetoothData=='0'){// if number 0 pressed ....
   digitalWrite(9,LOW);
-   Genotronex.println("LED  On D13 Off ! ");
+   
   }
   if (BluetoothData=='2'){// if number 0 pressed ....
   digitalWrite(3,HIGH);
-   Genotronex.println("LED  On D13 Off ! ");
+   
+  }
+  if (BluetoothData=='3'){// if number 0 pressed ....
+  digitalWrite(3,LOW);
+  }
+  if (BluetoothData=='4'){
+  digitalWrite(enablePin, LOW);
+  }
+  digitalWrite(enablePin, HIGH);
+   
   }
 }
 delay(100);// prepare for next data ...
