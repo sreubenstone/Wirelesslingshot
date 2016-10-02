@@ -63,7 +63,6 @@ BluetoothData=Genotronex.read();
   if (BluetoothData=='4'){
   digitalWrite(enablePin, LOW);
   }
-  digitalWrite(enablePin, HIGH);
    
   }
 }
